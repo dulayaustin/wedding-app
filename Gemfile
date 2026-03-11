@@ -66,4 +66,10 @@ group :development do
   gem "capybara"
   gem "shoulda-matchers"
   gem "webdrivers", "=5.3.1", require: false
+
+  gem "ruby_ui", "~> 1.1", require: false
 end
+
+gem "phlex-rails", "~> 2.4"
+
+gem "tailwind_merge", "~> 1.4"
