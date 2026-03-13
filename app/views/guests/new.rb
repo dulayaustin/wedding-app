@@ -13,7 +13,7 @@ class Views::Guests::New < Views::Base
         Heading(level: 1) { "Add Guest" }
       end
 
-      form(action: guests_path, method: :post, class: "space-y-4") do
+      Form(action: guests_path, method: :post, class: "space-y-4") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 
         FormField do
@@ -26,9 +26,7 @@ class Views::Guests::New < Views::Base
             placeholder: "Enter first name",
             required: true
           )
-          if @guest.errors[:first_name].any?
-            FormFieldError { @guest.errors[:first_name].first }
-          end
+          FormFieldError { @guest.errors[:first_name].first } if @guest.errors[:first_name].any?
         end
 
         FormField do
@@ -41,32 +39,21 @@ class Views::Guests::New < Views::Base
             placeholder: "Enter last name",
             required: true
           )
-          if @guest.errors[:last_name].any?
-            FormFieldError { @guest.errors[:last_name].first }
-          end
+          FormFieldError { @guest.errors[:last_name].first } if @guest.errors[:last_name].any?
         end
 
         FormField do
           FormFieldLabel { "Category" }
-          div(class: "space-y-2 mt-1") do
-            label(class: "flex items-center gap-2 cursor-pointer") do
-              input(
-                type: :radio,
-                name: "guest[guest_category_id]",
-                value: "",
-                checked: @guest.guest_category.nil?
-              )
-              span { "None" }
+          Select do
+            SelectInput(name: "guest[guest_category_id]", value: @guest.guest_guest_category&.guest_category_id.to_s, id: "guest_category")
+            SelectTrigger do
+              SelectValue(placeholder: "Select a category", id: "guest_category") { @guest.guest_category&.name }
             end
-            @categories.each do |category|
-              label(class: "flex items-center gap-2 cursor-pointer") do
-                input(
-                  type: :radio,
-                  name: "guest[guest_category_id]",
-                  value: category.id,
-                  checked: @guest.guest_category&.id == category.id
-                )
-                span { category.name }
+            SelectContent(outlet_id: "guest_category") do
+              SelectGroup do
+                @categories.each do |category|
+                  SelectItem(value: category.id.to_s) { category.name }
+                end
               end
             end
           end
