@@ -30,7 +30,7 @@ class Views::Guests::Index < Views::Base
                 TableCell { guest.last_name }
                 TableCell { guest.age_group&.humanize }
                 TableCell { guest.guest_of&.humanize }
-                TableCell { guest.guest_category&.name }
+                TableCell { guest.account_guest_category&.name }
               end
             end
           else

@@ -1,5 +1,6 @@
 FactoryBot.define do
-  factory :guest_category do
+  factory :account_guest_category do
+    association :account
     name { Faker::Lorem.unique.word }
   end
 end

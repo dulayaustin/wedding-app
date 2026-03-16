@@ -14,5 +14,5 @@ Rails.application.routes.draw do
 
   resources :accounts
   resources :guests
-  resources :guest_categories
+  resources :account_guest_categories
 end

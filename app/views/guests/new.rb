@@ -81,9 +81,9 @@ class Views::Guests::New < Views::Base
         FormField do
           FormFieldLabel { "Category" }
           Select do
-            SelectInput(name: "guest[guest_category_id]", value: @guest.guest_guest_category&.guest_category_id.to_s, id: "guest_category")
+            SelectInput(name: "guest[account_guest_category_id]", value: @guest.guest_category&.account_guest_category_id.to_s, id: "guest_category")
             SelectTrigger do
-              SelectValue(placeholder: "Select a category", id: "guest_category") { @guest.guest_category&.name }
+              SelectValue(placeholder: "Select a category", id: "guest_category") { @guest.account_guest_category&.name }
             end
             SelectContent(outlet_id: "guest_category") do
               SelectGroup do
