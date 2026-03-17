@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
   def require_account
     redirect_to accounts_path unless current_account
   end
+
+  def after_sign_in_path_for(_resource)
+    accounts_path
+  end
 end
