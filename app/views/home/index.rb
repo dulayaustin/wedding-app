@@ -18,8 +18,7 @@ class Views::Home::Index < Views::Base
           # Nav links
           div(class: "flex items-center gap-1") do
             Link(href: root_path, variant: :ghost, size: :sm) { "Home" }
-            Link(href: guests_path, variant: :ghost, size: :sm) { "Guests" }
-            if helpers.current_user
+            if helpers.user_signed_in?
               if helpers.current_account
                 span(class: "text-sm text-muted-foreground px-2") { helpers.current_account.name }
                 form(action: account_session_path, method: :post) do

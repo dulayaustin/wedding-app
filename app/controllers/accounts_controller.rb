@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :set_account, only: %i[show edit update destroy]
 
   def index
-    render Views::Accounts::Index.new(accounts: Account.all)
+    render Views::Accounts::Index.new(accounts: current_user.accounts)
   end
 
   def show
@@ -16,6 +16,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     if @account.save
+      @account.account_users.create!(user: current_user)
       redirect_to accounts_path
     else
       render Views::Accounts::New.new(account: @account), status: :unprocessable_entity
@@ -42,7 +43,7 @@ class AccountsController < ApplicationController
   private
 
   def set_account
-    @account = Account.find(params[:id])
+    @account = current_user.accounts.find(params[:id])
   end
 
   def account_params
