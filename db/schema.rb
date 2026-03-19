@@ -10,18 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_19_161433) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_19_162825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-
-  create_table "account_guest_categories", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.datetime "created_at", null: false
-    t.string "name", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id", "name"], name: "index_account_guest_categories_on_account_id_and_name"
-    t.index ["account_id"], name: "index_account_guest_categories_on_account_id"
-  end
 
   create_table "account_users", force: :cascade do |t|
     t.bigint "account_id", null: false
@@ -39,15 +30,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_19_161433) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "guest_categories", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "name"], name: "index_guest_categories_on_account_id_and_name"
+    t.index ["account_id"], name: "index_guest_categories_on_account_id"
+  end
+
   create_table "guests", force: :cascade do |t|
-    t.bigint "account_guest_category_id", null: false
     t.integer "age_group"
     t.datetime "created_at", null: false
     t.string "first_name", null: false
+    t.bigint "guest_category_id", null: false
     t.integer "guest_of"
     t.string "last_name", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_guest_category_id"], name: "index_guests_on_account_guest_category_id"
+    t.index ["guest_category_id"], name: "index_guests_on_guest_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,8 +64,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_19_161433) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "account_guest_categories", "accounts"
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
-  add_foreign_key "guests", "account_guest_categories"
+  add_foreign_key "guest_categories", "accounts"
+  add_foreign_key "guests", "guest_categories"
 end

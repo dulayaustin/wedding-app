@@ -20,5 +20,5 @@ Rails.application.routes.draw do
   resource :account_session, only: [ :create, :destroy ]
   resources :accounts
   resources :guests
-  resources :account_guest_categories
+  resources :guest_categories
 end

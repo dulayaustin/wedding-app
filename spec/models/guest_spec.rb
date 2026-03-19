@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Guest, type: :model do
   describe 'associations' do
-    it { should belong_to(:account_guest_category) }
+    it { should belong_to(:guest_category) }
   end
 
   describe 'enums' do

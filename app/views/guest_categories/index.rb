@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-class Views::AccountGuestCategories::Index < Views::Base
-  def initialize(account_guest_categories:)
-    @account_guest_categories = account_guest_categories
+class Views::GuestCategories::Index < Views::Base
+  def initialize(guest_categories:)
+    @guest_categories = guest_categories
   end
 
   def view_template
     div(class: "container mx-auto py-10 px-4") do
       div(class: "flex items-center justify-between mb-6") do
         Heading(level: 1) { "Guest Categories" }
-        Link(href: new_account_guest_category_path, variant: :primary) { "Add Category" }
+        Link(href: new_guest_category_path, variant: :primary) { "Add Category" }
       end
 
       Table do
@@ -20,14 +20,14 @@ class Views::AccountGuestCategories::Index < Views::Base
           end
         end
         TableBody do
-          if @account_guest_categories.any?
-            @account_guest_categories.each do |category|
+          if @guest_categories.any?
+            @guest_categories.each do |category|
               TableRow do
                 TableCell { category.name }
                 TableCell do
                   div(class: "flex items-center gap-2") do
-                    Link(href: edit_account_guest_category_path(category), variant: :ghost, size: :sm) { "Edit" }
-                    form(action: account_guest_category_path(category), method: :post) do
+                    Link(href: edit_guest_category_path(category), variant: :ghost, size: :sm) { "Edit" }
+                    form(action: guest_category_path(category), method: :post) do
                       input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
                       input(type: :hidden, name: "_method", value: "delete")
                       Button(type: :submit, variant: :ghost, size: :sm) { "Delete" }

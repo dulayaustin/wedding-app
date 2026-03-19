@@ -1,4 +1,4 @@
-class AccountGuestCategory < ApplicationRecord
+class GuestCategory < ApplicationRecord
   DEFAULT_CATEGORIES = [ "Family", "Friends", "Workmates" ].freeze
 
   belongs_to :account
