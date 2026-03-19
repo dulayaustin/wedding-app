@@ -44,6 +44,6 @@ class AccountGuestCategoriesController < ApplicationController
 
   def set_account_guest_category
     @account_guest_category = current_account.account_guest_categories.find_by(id: params[:id])
-    redirect_to home_path unless @account_guest_category.present?
+    redirect_to home_path, alert: "Guest category cannot be found" unless @account_guest_category.present?
   end
 end

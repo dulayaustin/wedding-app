@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_18_162135) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_19_161433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,23 +39,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_162135) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "guest_categories", force: :cascade do |t|
-    t.bigint "account_guest_category_id", null: false
-    t.datetime "created_at", null: false
-    t.bigint "guest_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_guest_category_id"], name: "index_guest_categories_on_account_guest_category_id"
-    t.index ["guest_id", "account_guest_category_id"], name: "idx_on_guest_id_account_guest_category_id_a4f936f12c"
-    t.index ["guest_id"], name: "index_guest_categories_on_guest_id"
-  end
-
   create_table "guests", force: :cascade do |t|
+    t.bigint "account_guest_category_id", null: false
     t.integer "age_group"
     t.datetime "created_at", null: false
     t.string "first_name", null: false
     t.integer "guest_of"
     t.string "last_name", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_guest_category_id"], name: "index_guests_on_account_guest_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,6 +67,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_162135) do
   add_foreign_key "account_guest_categories", "accounts"
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
-  add_foreign_key "guest_categories", "account_guest_categories"
-  add_foreign_key "guest_categories", "guests"
+  add_foreign_key "guests", "account_guest_categories"
 end

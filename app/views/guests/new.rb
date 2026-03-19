@@ -81,7 +81,7 @@ class Views::Guests::New < Views::Base
         FormField do
           FormFieldLabel { "Category" }
           Select do
-            SelectInput(name: "guest[account_guest_category_id]", value: @guest.guest_category&.account_guest_category_id.to_s, id: "guest_category")
+            SelectInput(name: "guest[account_guest_category_id]", value: @guest.account_guest_category_id.to_s, id: "guest_category")
             SelectTrigger do
               SelectValue(placeholder: "Select a category", id: "guest_category") { @guest.account_guest_category&.name }
             end
@@ -93,6 +93,7 @@ class Views::Guests::New < Views::Base
               end
             end
           end
+          FormFieldError { @guest.errors[:account_guest_category].first } if @guest.errors[:account_guest_category].any?
         end
 
         Button(type: :submit, variant: :primary, class: "w-full") { "Add Guest" }

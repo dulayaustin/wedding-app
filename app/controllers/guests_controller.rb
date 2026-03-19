@@ -11,8 +11,6 @@ class GuestsController < ApplicationController
 
   def create
     guest = Guest.new(guest_params)
-    category_id = params.dig(:guest, :account_guest_category_id).presence
-    guest.build_guest_category(account_guest_category_id: category_id) if category_id
     if guest.save
       redirect_to guests_path
     else
@@ -23,6 +21,11 @@ class GuestsController < ApplicationController
   private
 
   def guest_params
-    params.require(:guest).permit(:first_name, :last_name, :age_group, :guest_of)
+    permitted = params.require(:guest).permit(
+      :first_name, :last_name, :age_group, :guest_of, :account_guest_category_id
+    )
+    cat_id = permitted[:account_guest_category_id]
+    permitted.delete(:account_guest_category_id) if cat_id.present? && !current_account.account_guest_categories.exists?(cat_id.to_i)
+    permitted
   end
 end
