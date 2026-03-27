@@ -7,9 +7,12 @@ FROM ghcr.io/rails/devcontainer/images/ruby:$RUBY_VERSION
 ENV BINDING="0.0.0.0"
 
 USER root
-# Install Node.js and Claude Code
+# Install Node.js, Claude Code, and Chromium (for Playwright on ARM64)
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get install -y nodejs \
+    && apt-get install -y nodejs chromium \
     && npm install -g @anthropic-ai/claude-code@latest
+
+# Point Playwright to the system Chromium (required on ARM64 — no Google Chrome binary available)
+ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium
 
 USER vscode
