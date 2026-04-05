@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_05_141210) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_05_141819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -37,6 +37,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_141210) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_events_on_account_id"
+  end
+
+  create_table "guest_categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "event_id", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_guest_categories_on_event_id"
   end
 
   create_table "guests", force: :cascade do |t|
@@ -67,4 +75,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_141210) do
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
   add_foreign_key "events", "accounts"
+  add_foreign_key "guest_categories", "events"
 end
