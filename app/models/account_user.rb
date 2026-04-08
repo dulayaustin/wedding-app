@@ -3,6 +3,7 @@
 # Table name: account_users
 #
 #  id         :bigint           not null, primary key
+#  role       :integer          not null, default("coordinator")
 #  account_id :bigint           not null
 #  user_id    :bigint           not null
 #  created_at :datetime         not null
@@ -22,4 +23,6 @@
 class AccountUser < ApplicationRecord
   belongs_to :account
   belongs_to :user
+
+  enum :role, { coordinator: 0, bride: 1, groom: 2 }
 end
