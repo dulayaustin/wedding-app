@@ -52,9 +52,9 @@ class Views::Users::Registrations::New < Views::Base
         Heading(level: 2) { "Your Event" }
 
         FormField do
-          FormFieldLabel(for: "event_name") { "Event Name" }
-          Input(id: "event_name", type: :text, name: "event[name]", value: @event.name.to_s, placeholder: "Smith & Jones Wedding", required: true)
-          FormFieldError { @event.errors[:name].first } if @event.errors[:name].any?
+          FormFieldLabel(for: "event_title") { "Event Name" }
+          Input(id: "event_title", type: :text, name: "event[title]", value: @event.title.to_s, placeholder: "Smith & Jones Wedding", required: true)
+          FormFieldError { @event.errors[:title].first } if @event.errors[:title].any?
           FormFieldError { @account.errors[:name].first } if @account.errors[:name].any?
         end
 

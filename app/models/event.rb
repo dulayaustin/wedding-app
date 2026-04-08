@@ -4,7 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  account_id :bigint           not null
-#  name       :string           not null
+#  title       :string           not null
 #  event_date :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -24,7 +24,7 @@ class Event < ApplicationRecord
   has_many :guests, dependent: :destroy
   has_many :guest_categories, dependent: :destroy
 
-  validates :name, presence: true
+  validates :title, presence: true
 
   private
 

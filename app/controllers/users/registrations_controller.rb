@@ -40,10 +40,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def account_params
-    { name: params.dig(:event, :name) }
+    { name: params.dig(:event, :title) }
   end
 
   def event_params
-    params.require(:event).permit(:name, :event_date)
+    params.require(:event).permit(:title, :event_date)
   end
 end

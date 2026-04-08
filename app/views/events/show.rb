@@ -8,7 +8,7 @@ class Views::Events::Show < Views::Base
   def view_template
     div(class: "container mx-auto py-10 px-4 max-w-2xl") do
       div(class: "mb-6 flex items-center justify-between") do
-        Heading(level: 1) { @event.name }
+        Heading(level: 1) { @event.title }
         Link(href: edit_event_path(@event), variant: :outline, size: :sm) { "Edit Details" }
       end
 

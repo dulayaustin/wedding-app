@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Registrations::Create do
   let(:valid_user_params)    { { first_name: "Jane", last_name: "Smith", email: "jane@example.com", password: "password123", password_confirmation: "password123" } }
   let(:valid_account_params) { { name: "Smith Wedding" } }
-  let(:valid_event_params)   { { name: "Smith Wedding", event_date: 1.year.from_now } }
+  let(:valid_event_params)   { { title: "Smith Wedding", event_date: 1.year.from_now } }
 
   def call(user_params: valid_user_params, account_params: valid_account_params, event_params: valid_event_params)
     described_class.new(user_params: user_params, account_params: account_params, event_params: event_params).call
@@ -69,7 +69,7 @@ RSpec.describe Registrations::Create do
     end
 
     context 'with invalid event params' do
-      let(:bad_event_params) { { name: '' } }
+      let(:bad_event_params) { { title: '' } }
 
       it 'returns a failed result' do
         expect(call(event_params: bad_event_params)).not_to be_success

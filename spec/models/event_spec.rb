@@ -8,7 +8,7 @@ RSpec.describe Event, type: :model do
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:title) }
   end
 
   describe 'attributes' do

@@ -19,7 +19,7 @@ RSpec.describe "Users::Registrations", type: :request do
           password_confirmation: "password123"
         },
         event: {
-          name: "Smith & Jones Wedding",
+          title: "Smith & Jones Wedding",
           event_date: 1.year.from_now.to_date.to_s
         }
       }
@@ -56,7 +56,7 @@ RSpec.describe "Users::Registrations", type: :request do
 
     context "with invalid event params" do
       it "returns unprocessable_entity" do
-        post user_registration_path, params: valid_params.deep_merge(event: { name: "" })
+        post user_registration_path, params: valid_params.deep_merge(event: { title: "" })
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
