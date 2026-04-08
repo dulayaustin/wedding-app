@@ -45,7 +45,7 @@ RSpec.describe "Events", type: :request do
 
     it "re-renders edit on invalid params" do
       patch event_path(event), params: { event: { title: "" } }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 end

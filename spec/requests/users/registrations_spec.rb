@@ -42,9 +42,9 @@ RSpec.describe "Users::Registrations", type: :request do
     end
 
     context "with invalid user params" do
-      it "returns unprocessable_entity" do
+      it "returns unprocessable_content" do
         post user_registration_path, params: valid_params.deep_merge(user: { email: "" })
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it "does not create any records" do
@@ -55,9 +55,9 @@ RSpec.describe "Users::Registrations", type: :request do
     end
 
     context "with invalid event params" do
-      it "returns unprocessable_entity" do
+      it "returns unprocessable_content" do
         post user_registration_path, params: valid_params.deep_merge(event: { title: "" })
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
