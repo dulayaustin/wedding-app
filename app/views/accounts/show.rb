@@ -6,7 +6,7 @@ class Views::Accounts::Show < Views::Base
   end
 
   def view_template
-    div(class: "container mx-auto py-10 px-4 max-w-md") do
+    render Views::Layouts::Sidebar::Account.new do
       div(class: "mb-6 flex items-center gap-4") do
         Link(href: accounts_path, variant: :ghost, size: :sm) { "← Back" }
         Heading(level: 1) { @account.name }

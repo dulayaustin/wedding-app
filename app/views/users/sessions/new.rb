@@ -8,7 +8,6 @@ class Views::Users::Sessions::New < Views::Base
   def view_template
     div(class: "container mx-auto py-10 px-4 max-w-md") do
       div(class: "mb-6 flex items-center gap-4") do
-        Link(href: root_path, variant: :ghost, size: :sm) { "← Back" }
         Heading(level: 1) { "Sign In" }
       end
 

@@ -6,7 +6,7 @@ class Views::Guests::Index < Views::Base
   end
 
   def view_template
-    div(class: "container mx-auto py-10 px-4") do
+    render Views::Layouts::Sidebar::Event.new do
       div(class: "flex items-center justify-between mb-6") do
         Heading(level: 1) { "Guest List" }
         Link(href: new_guest_path, variant: :primary) { "Add Guest" }

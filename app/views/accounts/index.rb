@@ -6,7 +6,7 @@ class Views::Accounts::Index < Views::Base
   end
 
   def view_template
-    div(class: "container mx-auto py-10 px-4") do
+    render Views::Layouts::Sidebar::Account.new do
       div(class: "flex items-center justify-between mb-6") do
         Heading(level: 1) { "Accounts" }
         Link(href: new_account_path, variant: :primary) { "New Account" }
