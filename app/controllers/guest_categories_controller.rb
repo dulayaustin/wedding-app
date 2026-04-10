@@ -40,7 +40,7 @@ class GuestCategoriesController < ApplicationController
   private
 
   def guest_category_params
-    params.require(:guest_category).permit(:name)
+    params.expect(guest_category: [ :name ])
   end
 
   def set_guest_category

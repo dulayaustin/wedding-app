@@ -22,9 +22,7 @@ class GuestsController < ApplicationController
   private
 
   def guest_params
-    permitted = params.require(:guest).permit(
-      :first_name, :last_name, :age_group, :guest_of, :guest_category_id
-    )
+    permitted = params.expect(guest: [ :first_name, :last_name, :age_group, :guest_of, :guest_category_id ])
     cat_id = permitted[:guest_category_id]
     permitted.delete(:guest_category_id) if cat_id.present? && !current_event.guest_categories.exists?(cat_id.to_i)
     permitted

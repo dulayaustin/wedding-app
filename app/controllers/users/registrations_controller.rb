@@ -45,10 +45,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def event_params
-    params.require(:event).permit(:title, :event_date)
+    params.expect(event: [ :title, :event_date ])
   end
 
   def account_user_params
-    params[:account_user]&.permit(:role) || {}
+    params.expect(account_user: [ :role ])
   end
 end
