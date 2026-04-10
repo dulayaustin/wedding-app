@@ -13,6 +13,13 @@ RSpec.describe "Events", type: :request do
     post account_session_path, params: { account_id: account.id }
   end
 
+  describe "GET /events" do
+    it "returns http success" do
+      get events_path
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe "GET /events/:id" do
     it "returns http success for owned event" do
       get event_path(event)

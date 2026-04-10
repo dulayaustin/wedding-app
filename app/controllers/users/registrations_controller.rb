@@ -49,6 +49,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def account_user_params
-    params.require(:account_user).permit(:role)
+    params[:account_user]&.permit(:role) || {}
   end
 end

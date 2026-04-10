@@ -1,6 +1,10 @@
 class EventsController < ApplicationController
   before_action :require_account
-  before_action :set_event
+  before_action :set_event, only: %i[show edit update]
+
+  def index
+    render Views::Events::Index.new(events: current_account.events)
+  end
 
   def show
     render Views::Events::Show.new(event: @event)

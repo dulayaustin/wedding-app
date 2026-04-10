@@ -11,11 +11,17 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_account, :current_event
 
-  def after_sign_in_path_for(_resource)
-    if current_account&.events&.any?
-      event = current_account.events.first
-      set_event_session(event)
-      event_path(event)
+  def after_sign_in_path_for(resource)
+    accounts = resource.accounts
+    if accounts.size == 1
+      account = accounts.first
+      set_account_session(account)
+      events = account.events
+      if events.size == 1
+        event_path(events.first)
+      else
+        events_path
+      end
     else
       accounts_path
     end
