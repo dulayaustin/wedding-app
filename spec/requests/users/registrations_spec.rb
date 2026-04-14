@@ -21,6 +21,9 @@ RSpec.describe "Users::Registrations", type: :request do
         event: {
           title: "Smith & Jones Wedding",
           event_date: 1.year.from_now.to_date.to_s
+        },
+        account_user: {
+          role: "coordinator"
         }
       }
     end
