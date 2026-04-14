@@ -32,8 +32,7 @@ module AccountSessionable
   def require_event
     return if current_event
     if current_account&.events&.any?
-      set_event_session(current_account.events.first)
-      redirect_to event_path(current_account.events.first)
+      redirect_to events_path, alert: "Please select an event to continue."
     else
       redirect_to accounts_path, alert: "Please set up an event first."
     end
