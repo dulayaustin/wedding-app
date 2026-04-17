@@ -11,6 +11,10 @@ class Components::Base < Phlex::HTML
   register_value_helper :request
   register_value_helper :flash
 
+  def heroicon(name, variant: Heroicons.configuration.variant, options: {})
+    raw Heroicons::Icon.render(name: name, variant: variant, options: options, path_options: {}).to_s.html_safe
+  end
+
   def render_flash
     if flash[:notice].present?
       Alert(variant: :success, class: "mb-6") do

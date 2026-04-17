@@ -75,3 +75,5 @@ gem "phlex-rails", "~> 2.4"
 gem "tailwind_merge", "~> 1.4"
 
 gem "devise", "~> 5.0"
+
+gem "heroicons"

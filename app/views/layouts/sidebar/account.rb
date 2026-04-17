@@ -2,13 +2,15 @@
 
 class Views::Layouts::Sidebar::Account < Views::Base
   def view_template(&block)
-    div(class: "flex min-h-screen bg-background") do
-      aside(class: "w-64 border-r border-border flex flex-col shrink-0") do
-        render_logo
-        render_nav
-        render_footer
+    SidebarWrapper(class: "h-svh") do
+      Sidebar(collapsible: :icon) do
+        SidebarHeader { render_logo }
+        SidebarContent { render_nav }
+        SidebarFooter { render_footer }
+        SidebarRail()
       end
-      div(class: "flex-1 overflow-auto p-8") do
+      SidebarInset(class: "overflow-auto p-8") do
+        SidebarTrigger(class: "mb-4 -ml-1")
         render_flash
         yield
       end
@@ -18,49 +20,51 @@ class Views::Layouts::Sidebar::Account < Views::Base
   private
 
   def render_logo
-    div(class: "p-4 border-b border-border") do
-      a(href: root_path, class: "flex items-center gap-2 text-foreground no-underline") do
-        div(class: "h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold") { "W" }
-        span(class: "font-semibold") { "Wed Club" }
-      end
+    a(href: root_path, class: "flex items-center gap-2 text-sidebar-foreground no-underline") do
+      div(class: "h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold shrink-0") { "W" }
+      span(class: "font-semibold group-data-[collapsible=icon]:hidden") { "Wed Club" }
     end
   end
 
   def render_nav
-    nav(class: "flex-1 p-3 space-y-1") do
-      if current_account
-        p(class: "px-3 pt-2 pb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider") { current_account.name }
+    SidebarGroup do
+      SidebarGroupLabel { current_account.name } if current_account
+      SidebarGroupContent do
+        SidebarMenu do
+          SidebarMenuItem do
+            SidebarMenuButton(as: :a, href: accounts_path, active: active_link?(accounts_path)) do
+              heroicon "users", variant: :outline, options: { class: "size-4" }
+              span { "Accounts" }
+            end
+          end
+          if current_account
+            SidebarMenuItem do
+              SidebarMenuButton(as: :a, href: events_path, active: active_link?(events_path)) do
+                heroicon "calendar", variant: :outline, options: { class: "size-4" }
+                span { "Events" }
+              end
+            end
+          end
+        end
       end
-
-      nav_link(href: accounts_path, label: "Accounts")
-      nav_link(href: events_path, label: "Events") if current_account
     end
   end
 
   def render_footer
-    div(class: "p-3 border-t border-border") do
-      div(class: "flex items-center gap-2 px-2 mb-2") do
-        Avatar(size: :sm) do
-          AvatarFallback { current_user&.first_name&.first&.upcase }
-        end
-        span(class: "text-sm font-medium truncate") { current_user&.first_name }
+    div(class: "flex items-center gap-2 px-2 mb-2") do
+      Avatar(size: :sm) do
+        AvatarFallback { current_user&.first_name&.first&.upcase }
       end
-      Form(action: destroy_user_session_path, method: :post, class: "w-full") do
-        input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
-        input(type: :hidden, name: "_method", value: "delete")
-        Button(type: :submit, variant: :ghost, size: :sm, class: "w-full justify-start text-muted-foreground") { "Sign Out" }
-      end
+      span(class: "text-sm font-medium truncate group-data-[collapsible=icon]:hidden") { current_user&.first_name }
+    end
+    Form(action: destroy_user_session_path, method: :post, class: "w-full group-data-[collapsible=icon]:hidden") do
+      input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
+      input(type: :hidden, name: "_method", value: "delete")
+      Button(type: :submit, variant: :ghost, size: :sm, class: "w-full justify-start text-muted-foreground") { "Sign Out" }
     end
   end
 
-  def nav_link(href:, label:)
-    current = request.path == href || request.path.start_with?("#{href}/")
-    classes = "flex items-center px-3 py-2 text-sm rounded-md no-underline transition-colors "
-    classes += if current
-      "bg-accent text-accent-foreground font-medium"
-    else
-      "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-    end
-    a(href: href, class: classes) { label }
+  def active_link?(href, exact: false)
+    exact ? request.path == href : request.path == href || request.path.start_with?("#{href}/")
   end
 end
