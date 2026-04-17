@@ -11,26 +11,7 @@ class Views::GuestCategories::New < Views::Base
         Heading(level: 1) { "Add Category" }
       end
 
-      Form(action: guest_categories_path, method: :post, class: "space-y-4") do
-        input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
-
-        FormField do
-          FormFieldLabel(for: "guest_category_name") { "Name" }
-          Input(
-            id: "guest_category_name",
-            type: :text,
-            name: "guest_category[name]",
-            value: @guest_category.name.to_s,
-            placeholder: "Enter category name",
-            required: true
-          )
-          if @guest_category.errors[:name].any?
-            FormFieldError { @guest_category.errors[:name].first }
-          end
-        end
-
-        Button(type: :submit, variant: :primary, class: "w-full") { "Add Category" }
-      end
+      render Views::GuestCategories::Form.new(guest_category: @guest_category)
     end
   end
 end

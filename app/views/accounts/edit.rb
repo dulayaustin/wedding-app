@@ -11,27 +11,7 @@ class Views::Accounts::Edit < Views::Base
         Heading(level: 1) { "Edit Account" }
       end
 
-      Form(action: account_path(@account), method: :post, class: "space-y-4") do
-        input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
-        input(type: :hidden, name: "_method", value: "patch")
-
-        FormField do
-          FormFieldLabel(for: "account_name") { "Name" }
-          Input(
-            id: "account_name",
-            type: :text,
-            name: "account[name]",
-            value: @account.name.to_s,
-            placeholder: "Enter account name",
-            required: true
-          )
-          if @account.errors[:name].any?
-            FormFieldError { @account.errors[:name].first }
-          end
-        end
-
-        Button(type: :submit, variant: :primary, class: "w-full") { "Update Account" }
-      end
+      render Views::Accounts::Form.new(account: @account)
     end
   end
 end
