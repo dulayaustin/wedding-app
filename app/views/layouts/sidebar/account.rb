@@ -36,7 +36,10 @@ class Views::Layouts::Sidebar::Account < Views::Base
 
   def render_footer
     div(class: "p-3 border-t border-border") do
-      div(class: "flex items-center justify-between px-2 mb-2") do
+      div(class: "flex items-center gap-2 px-2 mb-2") do
+        Avatar(size: :sm) do
+          AvatarFallback { current_user&.first_name&.first&.upcase }
+        end
         span(class: "text-sm font-medium truncate") { current_user&.first_name }
       end
       form(action: destroy_user_session_path, method: :post, class: "w-full") do

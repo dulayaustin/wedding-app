@@ -41,15 +41,15 @@ RSpec.describe "Events", type: :system do
     end
 
     it "displays the event date" do
-      expect(page).to have_text("Date: June 15, 2026")
+      expect(page).to have_text("June 15, 2026")
     end
 
     it "displays the venue" do
-      expect(page).to have_text("Venue: Grand Hall")
+      expect(page).to have_text("Grand Hall")
     end
 
     it "displays the theme" do
-      expect(page).to have_text("Theme: Black Tie")
+      expect(page).to have_text("Black Tie")
     end
 
     context "with no optional fields" do

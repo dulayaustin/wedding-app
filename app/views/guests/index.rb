@@ -28,8 +28,12 @@ class Views::Guests::Index < Views::Base
               TableRow do
                 TableCell { guest.first_name }
                 TableCell { guest.last_name }
-                TableCell { guest.age_group&.humanize }
-                TableCell { guest.guest_of&.humanize }
+                TableCell do
+                  Badge(variant: :outline) { guest.age_group.humanize } if guest.age_group
+                end
+                TableCell do
+                  Badge(variant: :outline) { guest.guest_of.humanize } if guest.guest_of
+                end
                 TableCell { guest.guest_category&.name }
               end
             end

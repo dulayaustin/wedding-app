@@ -36,20 +36,20 @@ class Views::Layouts::Sidebar::Event < Views::Base
       nav_link(href: guests_path, label: "Guests")
       nav_link(href: guest_categories_path, label: "Guest Categories")
 
-      div(class: "border-t border-border my-3")
+      Separator(class: "my-3")
 
       p(class: "px-3 pb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider") { "Account" }
 
-      if current_event
-        nav_link(href: edit_event_path(current_event), label: "Edit Event")
-      end
       nav_link(href: events_path, label: "Switch Event")
     end
   end
 
   def render_footer
     div(class: "p-3 border-t border-border") do
-      div(class: "flex items-center justify-between px-2 mb-2") do
+      div(class: "flex items-center gap-2 px-2 mb-2") do
+        Avatar(size: :sm) do
+          AvatarFallback { current_user&.first_name&.first&.upcase }
+        end
         span(class: "text-sm font-medium truncate") { current_user&.first_name }
       end
       form(action: destroy_user_session_path, method: :post, class: "w-full") do

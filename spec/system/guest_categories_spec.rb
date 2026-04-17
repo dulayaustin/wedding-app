@@ -35,9 +35,8 @@ RSpec.describe "Guest Categories", type: :system do
 
     context "when deleting a category" do
       it "removes the category and redirects to categories index" do
-        within("tr", text: "Family") do
-          click_button "Delete"
-        end
+        # AlertDialog requires JS; rack_test submits the hidden form directly
+        find("form[action='#{guest_category_path(category)}']", visible: :all).click_button("Delete", visible: :all)
 
         expect(page).to have_current_path(guest_categories_path)
         expect(page).not_to have_css("td", text: "Family")

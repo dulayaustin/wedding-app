@@ -55,13 +55,15 @@ class Views::Users::Registrations::New < Views::Base
           div(class: "flex gap-4") do
             [ [ "coordinator", "Coordinator" ], [ "bride", "Bride" ], [ "groom", "Groom" ] ].each do |value, label|
               div(class: "flex items-center gap-2") do
-                input(type: :radio, id: "account_user_role_#{value}", name: "account_user[role]", value: value, required: true)
-                label(for: "account_user_role_#{value}") { label }
+                RadioButton(id: "account_user_role_#{value}", name: "account_user[role]", value: value, required: true)
+                FormFieldLabel(for: "account_user_role_#{value}") { label }
               end
             end
           end
           FormFieldError { @account_user.errors[:role].first } if @account_user.errors[:role].any?
         end
+
+        Separator(class: "my-2")
 
         Heading(level: 2) { "Your Event" }
 

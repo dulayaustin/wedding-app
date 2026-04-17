@@ -12,15 +12,26 @@ class Views::Events::Show < Views::Base
         Link(href: edit_event_path(@event), variant: :outline, size: :sm) { "Edit Details" }
       end
 
-      div(class: "space-y-2") do
+      div(class: "space-y-4") do
         if @event.event_date.present?
-          p { "Date: #{@event.event_date.strftime("%B %-d, %Y")}" }
+          div do
+            Text(class: "text-xs text-muted-foreground uppercase tracking-wide") { "Date" }
+            Text(class: "mt-1") { @event.event_date.strftime("%B %-d, %Y") }
+          end
+          Separator
         end
         if @event.venue.present?
-          p { "Venue: #{@event.venue}" }
+          div do
+            Text(class: "text-xs text-muted-foreground uppercase tracking-wide") { "Venue" }
+            Text(class: "mt-1") { @event.venue }
+          end
+          Separator
         end
         if @event.theme.present?
-          p { "Theme: #{@event.theme}" }
+          div do
+            Text(class: "text-xs text-muted-foreground uppercase tracking-wide") { "Theme" }
+            Text(class: "mt-1") { @event.theme }
+          end
         end
       end
     end

@@ -28,8 +28,8 @@ class Views::Users::Sessions::New < Views::Base
 
         FormField do
           div(class: "flex items-center gap-2") do
-            input(type: :checkbox, id: "user_remember_me", name: "user[remember_me]", value: "1")
-            label(for: "user_remember_me", class: "text-sm") { "Remember me" }
+            Checkbox(id: "user_remember_me", name: "user[remember_me]", value: "1")
+            FormFieldLabel(for: "user_remember_me") { "Remember me" }
           end
         end
 

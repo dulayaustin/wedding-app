@@ -42,10 +42,27 @@ class Views::Accounts::Index < Views::Base
                       end
                     end
                     Link(href: edit_account_path(account), variant: :ghost, size: :sm) { "Edit" }
-                    form(action: account_path(account), method: :post) do
+                    form(action: account_path(account), method: :post,
+                         id: "delete-account-#{account.id}", style: "display:none") do
                       input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
                       input(type: :hidden, name: "_method", value: "delete")
-                      Button(type: :submit, variant: :ghost, size: :sm) { "Delete" }
+                      input(type: :submit, value: "Delete")
+                    end
+                    AlertDialog do
+                      AlertDialogTrigger do
+                        Button(variant: :ghost, size: :sm) { "Delete" }
+                      end
+                      AlertDialogContent do
+                        AlertDialogHeader do
+                          AlertDialogTitle { "Delete account?" }
+                          AlertDialogDescription { "This will permanently delete \"#{account.name}\". This action cannot be undone." }
+                        end
+                        AlertDialogFooter do
+                          AlertDialogCancel(size: :sm) { "Cancel" }
+                          Button(type: :submit, form: "delete-account-#{account.id}",
+                                 variant: :destructive, size: :sm) { "Delete" }
+                        end
+                      end
                     end
                   end
                 end
